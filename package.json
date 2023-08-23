@@ -1,0 +1,33 @@
+{
+  "name": "@untangled/subgraph",
+  "version": "0.0.1",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph codegen && graph build",
+    "test": "graph test",
+    "deploy-prod": "yarn predeploy-prod && graph codegen && graph deploy --product hosted-service xxxx",
+    "predeploy-prod": "ts-node ./scripts/update-address-manifest.ts",
+    "create-local": "graph create --node http://localhost:8020/ untangled-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ untangled-subgraph",
+    "deploy-local": "yarn predeploy-local && graph codegen && graph deploy --node http://localhost:8020 --ipfs http://localhost:5002 --version-label v0.0.1 untangled-subgraph subgraph-local.yaml",
+    "predeploy-local": "ts-node ./scripts/setup-subgraph-manifest-local.ts && NETWORK_NAME=localhost ts-node ./scripts/update-address-manifest.ts",
+    "deploy-local-nonlocal-ipfs": "yarn predeploy-local-nonlocal-ipfs && graph codegen && graph deploy --node http://localhost:8020 --version-label v0.0.1 untangled-subgraph subgraph-local.yaml",
+    "predeploy-local-nonlocal-ipfs": "yarn predeploy-local",
+    "start-local": "docker compose --env-file .env.local-subgraph up -d",
+    "stop-local": "docker compose --env-file .env.local-subgraph down -v && rm -rf data"
+  },
+  "resolutions": {
+    "concat-stream": "https://github.com/hugomrdias/concat-stream#1.4.x"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.55.0",
+    "@graphprotocol/graph-ts": "0.31.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "4.0.5",
+    "@types/node": "18.11.9",
+    "js-yaml": "4.1.0",
+    "matchstick-as": "0.5.2",
+    "ts-node": "10.9.1"
+  }
+}
