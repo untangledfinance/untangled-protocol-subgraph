@@ -14,52 +14,6 @@ Debugging on the graph should be done through logs and checking the subgraph log
 
 In practical terms, logs should be added to monitor the progress of the application.
 
-### Validating data received from the subgraph
-
-1. Change the network to be mainnet
-2. Change on App.tsx the currentBlock. eg:
-
-```
-- const currentBlock = getBlockInfo(await getCurrentBlock())
-+ const currentBlock = {
-+   number: 13845148,
-+   timestamp: 1637262806,
-+ }
-```
-
-- Add the block number on the graphql/queries.ts. eg:
-
-```
-_meta(block: {number: 13845148}) {
-  ...
-}
-seniorPools(first: 1, block: {number: 13845148}) {
-  ...
-}
-tranchedPools(block: {number: 13845148}) {
-  ...
-}
-```
-
-- On `usePoolsData`, disable the skip flag from web3 and add the validation scripts
-
-```
-  // Fetch data from subgraph
-  const {error, backers: backersSubgraph, seniorPoolStatus, data} = useTranchedPoolSubgraphData(..., false)
-
-  // Fetch data from web3 provider
-  const {backers: backersWeb3, poolsAddresses} = usePoolBackersWeb3({skip: false})
-  const {seniorPoolStatus: seniorPoolStatusWeb3} = useSeniorPoolStatusWeb3(capitalProvider)
-
-  if (backersSubgraph.loaded && backersWeb3.loaded && currentBlock && untangledProtocol) {
-    generalTranchedPoolsValidationByBackers(backersWeb3.value, backersSubgraph.value)
-    generalBackerValidation(untangledProtocol, data, currentBlock)
-  }
-```
-
-- Beaware that running `generalBackerValidation` will run the validations for all backers which is subject to rate limit of the web3 provider
-- On `src/graphql/client.ts` change the `API_URLS` for the url of the subgraph you want to validate
-
 ### Tests
 
 Subgraph tests use [Matchstick](https://github.com/LimeChain/matchstick) as a unit testing framework which is still in the early stages of development.
@@ -89,6 +43,38 @@ Typically we'd deploy the subgraph locally for a few reasons:
 3. Having access to the latest smart contract logic.
 
 It's a crucial step!
+
+### Common steps
+
+1. Running locally:
+
+```
+yarn start-local
+```
+
+2. Create app
+
+```
+yarn create-local
+```
+
+3. Build app
+
+```
+yarn codegen-testnet
+```
+
+4. Deploy locally
+
+```
+yarn deploy-local
+```
+
+5. Run a local test
+
+```
+doing....
+```
 
 #### Mac OS X
 
@@ -157,28 +143,6 @@ Below are the following descriptions for each component of the above command:
   - run `yarn create-local` - creates the subgraph instance titled: `untangled-subgraph`
   - run `yarn deploy-local` - deploys the subgraph to `localhost:8000`
 
-#### Linux
-
-- Run: `./reset-local.sh && ./start-local.sh` or `./start-local.sh`
-  - If you are on linux, the Graph Node Docker Compose setup uses host.docker.internal as the alias for the host machine. On Linux, this is not supported yet. The detault script already replaces the host name with the host IP address. If you have issues, run `ifconfig -a` and get the address of the docker0
-
-#### Cleaning up after running locally
-
-- Run `docker compose down -v` to tear down the Docker instances
-- Run `rm -rf ./data` from `subgraph` to remove any leftover data from execution. If you forget this step, it can lead to errors on subsequent runs.
-- Don't forget to close your locally-running blockchain from `protocol`
-
-#### Quick Runs
-
-- A quick run script is available: `subgraph/quick-start.sh`. This requires a test dump to be restored to the postgres container.
-  - This only works for mainnet forking
-  - The network on metamask should be http://localhost:8545
-
-#### Creating local backups
-
-- If you already have a running db and want to save it for future runs use:
-  - docker exec -t <postgres-container-id> pg_dumpall -c -U graph-node > ~/dump.sql
-
 ### Production
 
 For deploying the production subgraph:
@@ -190,12 +154,3 @@ yarn graph codegen
 yarn graph build
 yarn graph deploy --product hosted-service xxxx
 ```
-
-## Additional Resources
-
-- [The Graph Academy](https://thegraph.academy/developers/)
-- [The Graph Academy Hub](https://github.com/TheGraphAcademy/Graph-Academy-Hub)
-- [The Graph Explorer](https://thegraph.com/explorer/)
-- [Subgraph Monitor](https://github.com/gnosis/thegraph-subgraphs-monitor)
-- [Subgraph Toolkit](https://github.com/protofire/subgraph-toolkit)
-- [Create Subgraph](https://thegraph.com/docs/developer/create-subgraph-hosted)

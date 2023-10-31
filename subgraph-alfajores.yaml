@@ -15,8 +15,7 @@ dataSources:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - Gravatar
-        - Transaction
+        - SecuritizationManager
       abis:
         - name: SecuritizationManager
           file: ./abis/SecuritizationManager.json
