@@ -1,4 +1,6 @@
 import { clearStore, test, describe } from 'matchstick-as/assembly/index';
+import { log } from 'matchstick-as/assembly/log';
+
 import { SecuritizationManager } from '../generated/schema';
 import { NewPoolCreated } from '../generated/SecuritizationManager/SecuritizationManager';
 import { handlePoolCreated } from '../src/mappings/securitization-manager';
@@ -13,6 +15,8 @@ describe('Mock contract functions', () => {
     const newPoolCreateedEvent = createNewPoolEvent(
       '0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7'
     );
+
+    log.info('{}', [newPoolCreateedEvent.params.instanceAddress.toHexString()]);
 
     // Call mapping functions passing the events we just created
     handlePoolCreated(newPoolCreateedEvent);
