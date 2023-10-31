@@ -3,17 +3,16 @@
   "version": "0.0.1",
   "scripts": {
     "codegen": "graph codegen",
+    "codegen-testnet": "rm -rf generated && graph codegen ./subgraph-alfajores.yaml",
+    "build-testnet": "graph build ./subgraph-alfajores.yaml",
     "build": "graph codegen && graph build",
     "test": "graph test",
     "deploy-prod": "yarn predeploy-prod && graph codegen && graph deploy --product hosted-service xxxx",
-    "predeploy-prod": "ts-node ./scripts/update-address-manifest.ts",
     "create-local": "graph create --node http://localhost:8020/ untangled-subgraph",
     "remove-local": "graph remove --node http://localhost:8020/ untangled-subgraph",
-    "deploy-local": "yarn predeploy-local && graph codegen && graph deploy --node http://localhost:8020 --ipfs http://localhost:5002 --version-label v0.0.1 untangled-subgraph subgraph-local.yaml",
-    "predeploy-local": "ts-node ./scripts/setup-subgraph-manifest-local.ts && NETWORK_NAME=localhost ts-node ./scripts/update-address-manifest.ts",
-    "deploy-local-nonlocal-ipfs": "yarn predeploy-local-nonlocal-ipfs && graph codegen && graph deploy --node http://localhost:8020 --version-label v0.0.1 untangled-subgraph subgraph-local.yaml",
-    "predeploy-local-nonlocal-ipfs": "yarn predeploy-local",
-    "start-local": "docker compose --env-file .env.local-subgraph up -d",
+    "deploy-local": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5002 --version-label v0.0.1 untangled-subgraph subgraph-alfajores.yaml",
+    "deploy-local-nonlocal-ipfs": "graph deploy --node http://localhost:8020 --version-label v0.0.1 untangled-subgraph subgraph-alfajores.yaml",
+    "start-local": "docker compose --env-file .env.local-subgraph up",
     "stop-local": "docker compose --env-file .env.local-subgraph down -v && rm -rf data"
   },
   "resolutions": {
