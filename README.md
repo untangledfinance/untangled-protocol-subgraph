@@ -25,7 +25,7 @@ docker build -t matchstick . && docker run --rm matchstick
 or
 
 ```
-graph test
+yarn test
 ```
 
 - [Unit Testing Framework](https://thegraph.com/docs/en/developer/matchstick/)

@@ -1,0 +1,2 @@
+manifestPath: ./subgraph-alfajores.yaml
+testsFolder: ./tests

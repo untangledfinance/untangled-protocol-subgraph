@@ -1,4 +1,4 @@
-import { Address, log } from '@graphprotocol/graph-ts';
+import { Address, json, log } from '@graphprotocol/graph-ts';
 import { NewPoolCreated } from '../../generated/SecuritizationManager/SecuritizationManager';
 
 export function handlePoolCreated(event: NewPoolCreated): void {
