@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x3828A20e026d4332CdEb8aDa9C2D21502d71885a'
       abi: SecuritizationManager
-      startBlock: 21153480
+      startBlock: 21175482
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
