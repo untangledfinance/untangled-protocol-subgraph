@@ -8,38 +8,57 @@ dataSources:
     name: SecuritizationManager
     network: alfajores
     source:
-      address: '0x6aB771fCed5FDF7632464FF75a147F9f367A610A'
+      address: '0x3828A20e026d4332CdEb8aDa9C2D21502d71885a'
       abi: SecuritizationManager
-      startBlock: 11122028
+      startBlock: 21153481
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - TokensPurchased
         - NewPoolCreated
-        - NewTGECreated
         - NewNotesTokenCreated
-        # - Initialized
-        # - Paused
-        # - RoleAdminChanged
-        # - RoleGranted
-        # - RoleRevoked
-        # - Unpaused
+        - JotDeployed
+        - SotDeployed
+        - AdminChanged
+        - BeaconUpgraded
+        - Upgraded
+        - Initialized
+        - NewTGECreated
+        - Paused
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - TokensPurchased
+        - Unpaused
+        - UpdateAllowedUIDTypes
+        - UpdatePotToPool
       abis:
         - name: SecuritizationManager
           file: ./abis/SecuritizationManager.json
+        - name: MintedNormalTGE
+          file: ./abis/MintedNormalTGE.json
       eventHandlers:
         - event: TokensPurchased(indexed address,indexed address,uint256,uint256)
           handler: handleTokensPurchased
-        - event: NewPoolCreated(address)
+        - event: NewPoolCreated(indexed address)
           handler: handleNewPoolCreated
-        - event: NewTGECreated(address)
-          handler: handleNewTGECreated
-        - event: NewNotesTokenCreated(address)
-          handler: handleNewNotesTokenCreated
+        - event: SotDeployed(indexed address,address,address)
+          handler: handleSotDeployed
+        - event: JotDeployed(indexed address,address,address)
+          handler: handleJotDeployed
+        # - event: AdminChanged(address,address)
+        #   handler: handleAdminChanged
+        # - event: BeaconUpgraded(indexed address)
+        #   handler: handleBeaconUpgraded
+        # - event: Upgraded(indexed address)
+        #   handler: handleUpgraded
         # - event: Initialized(uint8)
         #   handler: handleInitialized
+        # - event: NewNotesTokenCreated(indexed address)
+        #   handler: handleNewNotesTokenCreated
+        # - event: NewTGECreated(indexed address)
+        #   handler: handleNewTGECreated
         # - event: Paused(address)
         #   handler: handlePaused
         # - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
@@ -50,42 +69,46 @@ dataSources:
         #   handler: handleRoleRevoked
         # - event: Unpaused(address)
         #   handler: handleUnpaused
+        # - event: UpdateAllowedUIDTypes(uint256[])
+        #   handler: handleUpdateAllowedUIDTypes
+        # - event: UpdatePotToPool(indexed address,indexed address)
+        #   handler: handleUpdatePotToPool
       file: ./src/mappings/securitization-manager.ts
-  - kind: ethereum
-    name: DistributionOperator
-    network: alfajores
-    source:
-      address: '0xe2d6653688646a82dcc0542ea5099988e853a7aa'
-      abi: DistributionOperator
-      startBlock: 11122056
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - Initialized
-        - TokensRedeemed
-        # - RoleAdminChanged
-        # - RoleGranted
-        # - RoleRevoked
-        # - Paused
-        # - Unpaused
-      abis:
-        - name: DistributionOperator
-          file: ./abis/DistributionOperator.json
-      eventHandlers:
-        - event: Initialized(uint8)
-          handler: handleInitialized
-        - event: TokensRedeemed(indexed address,indexed address,uint256,uint256)
-          handler: handleTokensRedeemed
-        # - event: Paused(address)
-        #   handler: handlePaused
-        # - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-        #   handler: handleRoleAdminChanged
-        # - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-        #   handler: handleRoleGranted
-        # - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-        #   handler: handleRoleRevoked
-        # - event: Unpaused(address)
-        #   handler: handleUnpaused
-      file: ./src/mappings/distribution-operator.ts
+  # - kind: ethereum
+  #   name: DistributionOperator
+  #   network: alfajores
+  #   source:
+  #     address: '0xe2d6653688646a82dcc0542ea5099988e853a7aa'
+  #     abi: DistributionOperator
+  #     startBlock: 11122056
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.7
+  #     language: wasm/assemblyscript
+  #     entities:
+  #       - TokensRedeemed
+  #       # - Initialized
+  #       # - RoleAdminChanged
+  #       # - RoleGranted
+  #       # - RoleRevoked
+  #       # - Paused
+  #       # - Unpaused
+  #     abis:
+  #       - name: DistributionOperator
+  #         file: ./abis/DistributionOperator.json
+  #     eventHandlers:
+  #       - event: TokensRedeemed(indexed address,indexed address,uint256,uint256)
+  #         handler: handleTokensRedeemed
+  #       # - event: Initialized(uint8)
+  #       #   handler: handleInitialized
+  #       # - event: Paused(address)
+  #       #   handler: handlePaused
+  #       # - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+  #       #   handler: handleRoleAdminChanged
+  #       # - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+  #       #   handler: handleRoleGranted
+  #       # - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+  #       #   handler: handleRoleRevoked
+  #       # - event: Unpaused(address)
+  #       #   handler: handleUnpaused
+  #     file: ./src/mappings/distribution-operator.ts

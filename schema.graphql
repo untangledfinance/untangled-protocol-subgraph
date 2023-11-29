@@ -1,6 +1,61 @@
+type Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TokensRedeemed @entity(immutable: true) {
+  id: Bytes!
+  redeemer: Bytes! # address
+  tokenAddress: Bytes! # address
+  currencyAmount: BigInt! # uint256
+  tokenAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+############## SecuritizationManager ##############
+type AdminChanged @entity(immutable: true) {
+  id: Bytes!
+  previousAdmin: Bytes! # address
+  newAdmin: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BeaconUpgraded @entity(immutable: true) {
+  id: Bytes!
+  beacon: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Upgraded @entity(immutable: true) {
+  id: Bytes!
+  implementation: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type Initialized @entity(immutable: true) {
   id: Bytes!
   version: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type JotDeployed @entity(immutable: true) {
+  id: Bytes!
+  jotAddress: Bytes! # address
+  tgeAddress: Bytes! # address
+  poolAddress: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -68,6 +123,16 @@ type RoleRevoked @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
+type SotDeployed @entity(immutable: true) {
+  id: Bytes!
+  sotAddress: Bytes! # address
+  tgeAddress: Bytes! # address
+  poolAddress: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type TokensPurchased @entity(immutable: true) {
   id: Bytes!
   investor: Bytes! # address
@@ -79,21 +144,34 @@ type TokensPurchased @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type Unpaused @entity(immutable: true) {
+
+type UpdateAllowedUIDTypes @entity(immutable: true) {
   id: Bytes!
-  account: Bytes! # address
+  uids: [BigInt!]! # uint256[]
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
 
-type TokensRedeemed @entity(immutable: true) {
+type UpdatePotToPool @entity(immutable: true) {
   id: Bytes!
-  redeemer: Bytes! # address
-  tokenAddress: Bytes! # address
-  currencyAmount: BigInt! # uint256
-  tokenAmount: BigInt! # uint256
+  pot: Bytes! # address
+  pool: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+}
+
+
+type PoolDetail @entity {
+  id: ID!
+  jotAddress: String!
+  tgeJOTAddress: String!
+  sotAddress: String!
+  tgeSOTAddress: String!
+  tokensPurchased: [TokensPurchased!]!
+  tokensRedeemed: [TokensRedeemed!]!
+  createdTimestamp: BigInt!
+  createdBlockNumber: BigInt!
+  createdTransactionHash: String!
 }
