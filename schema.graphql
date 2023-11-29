@@ -1,11 +1,3 @@
-type Unpaused @entity(immutable: true) {
-  id: Bytes!
-  account: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type TokensRedeemed @entity(immutable: true) {
   id: Bytes!
   redeemer: Bytes! # address
@@ -15,40 +7,7 @@ type TokensRedeemed @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-}
-
-############## SecuritizationManager ##############
-type AdminChanged @entity(immutable: true) {
-  id: Bytes!
-  previousAdmin: Bytes! # address
-  newAdmin: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type BeaconUpgraded @entity(immutable: true) {
-  id: Bytes!
-  beacon: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type Upgraded @entity(immutable: true) {
-  id: Bytes!
-  implementation: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type Initialized @entity(immutable: true) {
-  id: Bytes!
-  version: Int! # uint8
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+  poolDetail: PoolDetail!
 }
 
 type JotDeployed @entity(immutable: true) {
@@ -61,63 +20,9 @@ type JotDeployed @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type NewNotesTokenCreated @entity(immutable: true) {
-  id: Bytes!
-  instanceAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 type NewPoolCreated @entity(immutable: true) {
   id: Bytes!
   instanceAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type NewTGECreated @entity(immutable: true) {
-  id: Bytes!
-  instanceAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type Paused @entity(immutable: true) {
-  id: Bytes!
-  account: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type RoleAdminChanged @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  previousAdminRole: Bytes! # bytes32
-  newAdminRole: Bytes! # bytes32
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type RoleGranted @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  account: Bytes! # address
-  sender: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type RoleRevoked @entity(immutable: true) {
-  id: Bytes!
-  role: Bytes! # bytes32
-  account: Bytes! # address
-  sender: Bytes! # address
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -133,45 +38,28 @@ type SotDeployed @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type TokensPurchased @entity(immutable: true) {
+type NoteTokenPurchased @entity(immutable: true) {
   id: Bytes!
   investor: Bytes! # address
   tgeAddress: Bytes! # address
+  poolAddress: Bytes! # address
   amount: BigInt! # uint256
   tokenAmount: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  poolDetail: PoolDetail!
 }
-
-
-type UpdateAllowedUIDTypes @entity(immutable: true) {
-  id: Bytes!
-  uids: [BigInt!]! # uint256[]
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
-type UpdatePotToPool @entity(immutable: true) {
-  id: Bytes!
-  pot: Bytes! # address
-  pool: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
-
 
 type PoolDetail @entity {
   id: ID!
-  jotAddress: String!
-  tgeJOTAddress: String!
-  sotAddress: String!
-  tgeSOTAddress: String!
-  tokensPurchased: [TokensPurchased!]!
-  tokensRedeemed: [TokensRedeemed!]!
-  createdTimestamp: BigInt!
-  createdBlockNumber: BigInt!
-  createdTransactionHash: String!
+  jotAddress: String
+  tgeJOTAddress: String
+  sotAddress: String
+  tgeSOTAddress: String
+  tokensPurchased: [NoteTokenPurchased!] @derivedFrom(field: "poolDetail")
+  tokensRedeemed: [TokensRedeemed!]
+  createdTimestamp: BigInt
+  createdBlockNumber: BigInt
+  createdTransactionHash: String
 }

@@ -1,42 +1,13 @@
 import {
-  AdminChanged as AdminChangedEvent,
-  BeaconUpgraded as BeaconUpgradedEvent,
-  Upgraded as UpgradedEvent,
-  Initialized as InitializedEvent,
   JotDeployed as JotDeployedEvent,
-  NewNotesTokenCreated as NewNotesTokenCreatedEvent,
   NewPoolCreated as NewPoolCreatedEvent,
-  NewTGECreated as NewTGECreatedEvent,
-  Paused as PausedEvent,
-  RoleAdminChanged as RoleAdminChangedEvent,
-  RoleGranted as RoleGrantedEvent,
-  RoleRevoked as RoleRevokedEvent,
   SotDeployed as SotDeployedEvent,
-  TokensPurchased as TokensPurchasedEvent,
-  Unpaused as UnpausedEvent,
-  UpdateAllowedUIDTypes as UpdateAllowedUIDTypesEvent,
-  UpdatePotToPool as UpdatePotToPoolEvent
-} from "../../generated/SecuritizationManager/SecuritizationManager"
+  NoteTokenPurchased as NoteTokenPurchasedEvent} from "../../generated/SecuritizationManager/SecuritizationManager"
 import {
-  JotDeployed,
-  NewNotesTokenCreated,
-  NewPoolCreated,
-  NewTGECreated,
-  Paused,
-  RoleAdminChanged,
-  RoleGranted,
-  RoleRevoked,
-  SotDeployed,
-  TokensPurchased,
-  Unpaused,
-  UpdateAllowedUIDTypes,
-  UpdatePotToPool,
+  NoteTokenPurchased,
   PoolDetail
 } from "../../generated/schema"
 
-import {
-MintedNormalTGE as MintedNormalTGEContract
-} from "../../generated/SecuritizationManager/MintedNormalTGE"
 
 export function handleJotDeployed(event: JotDeployedEvent): void {
   let pool = PoolDetail.load(event.params.poolAddress.toHexString())
@@ -69,31 +40,20 @@ export function handleNewPoolCreated(event: NewPoolCreatedEvent): void {
   pool.save()
 }  
 
-export function handleTokensPurchased(event: TokensPurchasedEvent): void {
-  let tokensPurchased = new TokensPurchased(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
-  )
-  tokensPurchased.investor = event.params.investor
-  tokensPurchased.tgeAddress = event.params.tgeAddress
-  tokensPurchased.amount = event.params.amount
-  tokensPurchased.tokenAmount = event.params.tokenAmount
-
-  tokensPurchased.blockNumber = event.block.number
-  tokensPurchased.blockTimestamp = event.block.timestamp
-  tokensPurchased.transactionHash = event.transaction.hash
-
-  tokensPurchased.save()
-  
-  let tgeContract = MintedNormalTGEContract.bind(event.params.tgeAddress)
-  const poolAddress = tgeContract.pool()
-  let pool = PoolDetail.load(poolAddress.toHexString())
-  if (!pool) {
-    pool = new PoolDetail(poolAddress.toHexString())
+export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
+  let tokenPurchased = NoteTokenPurchased.load(event.transaction.hash.concatI32(event.logIndex.toI32()))
+  if (!tokenPurchased) {
+   tokenPurchased = new NoteTokenPurchased(event.transaction.hash.concatI32(event.logIndex.toI32()))
   }
-  let poolTokensPurchased = pool.tokensPurchased
-  if (!poolTokensPurchased) {
-    poolTokensPurchased = []
-  }
-  poolTokensPurchased.push(tokensPurchased.id)
-  pool.save()
+  tokenPurchased.investor = event.params.investor
+  tokenPurchased.tgeAddress = event.params.tgeAddress
+  tokenPurchased.poolAddress = event.params.poolAddress
+  tokenPurchased.amount = event.params.amount
+  tokenPurchased.tokenAmount = event.params.tokenAmount
+
+  tokenPurchased.blockNumber = event.block.number
+  tokenPurchased.blockTimestamp = event.block.timestamp
+  tokenPurchased.transactionHash = event.transaction.hash
+  tokenPurchased.poolDetail = event.params.poolAddress.toHexString()
+  tokenPurchased.save()
 }

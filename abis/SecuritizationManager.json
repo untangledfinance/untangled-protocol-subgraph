@@ -44,19 +44,30 @@
     "name": "Upgraded",
     "type": "event"
   },
-  { "stateMutability": "payable", "type": "fallback" },
+  {
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
   {
     "inputs": [],
     "name": "admin",
     "outputs": [
-      { "internalType": "address", "name": "admin_", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "admin_",
+        "type": "address"
+      }
     ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "newAdmin", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "newAdmin",
+        "type": "address"
+      }
     ],
     "name": "changeAdmin",
     "outputs": [],
@@ -96,14 +107,21 @@
         "name": "newImplementation",
         "type": "address"
       },
-      { "internalType": "bytes", "name": "data", "type": "bytes" }
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
     ],
     "name": "upgradeToAndCall",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
   },
-  { "stateMutability": "payable", "type": "receive" },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -179,6 +197,43 @@
       }
     ],
     "name": "NewTGECreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "investor",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "tgeAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "poolAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "tokenAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "NoteTokenPurchased",
     "type": "event"
   },
   {
@@ -373,21 +428,39 @@
   {
     "inputs": [],
     "name": "DEFAULT_ADMIN_ROLE",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "OWNER_ROLE",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "POOL_INIT_FUNC_SELECTOR",
-    "outputs": [{ "internalType": "bytes4", "name": "", "type": "bytes4" }],
+    "outputs": [
+      {
+        "internalType": "bytes4",
+        "name": "",
+        "type": "bytes4"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -408,25 +481,59 @@
         "name": "saleTypeAndDecimal",
         "type": "uint8[]"
       },
-      { "internalType": "bool", "name": "longSale", "type": "bool" },
-      { "internalType": "string", "name": "ticker", "type": "string" }
+      {
+        "internalType": "bool",
+        "name": "longSale",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "ticker",
+        "type": "string"
+      }
     ],
     "name": "_initialTGEForJOT",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "allowedUIDTypes",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "tgeAddress", "type": "address" },
-      { "internalType": "uint256", "name": "currencyAmount", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "tgeAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "currencyAmount",
+        "type": "uint256"
+      }
     ],
     "name": "buyTokens",
     "outputs": [],
@@ -436,56 +543,116 @@
   {
     "inputs": [],
     "name": "factoryAdmin",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getInitializedVersion",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getPoolsLength",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      }
     ],
     "name": "getRoleAdmin",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "uint256", "name": "index", "type": "uint256" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
     ],
     "name": "getRoleMember",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      }
     ],
     "name": "getRoleMemberCount",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "grantRole",
     "outputs": [],
@@ -494,20 +661,44 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "sender", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
     ],
     "name": "hasAllowedUID",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "hasRole",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -528,11 +719,25 @@
         "name": "saleTypeAndDecimal",
         "type": "uint8[]"
       },
-      { "internalType": "bool", "name": "longSale", "type": "bool" },
-      { "internalType": "string", "name": "ticker", "type": "string" }
+      {
+        "internalType": "bool",
+        "name": "longSale",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "ticker",
+        "type": "string"
+      }
     ],
     "name": "initialTGEForJOT",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -553,11 +758,25 @@
         "name": "saleTypeAndDecimal",
         "type": "uint8[]"
       },
-      { "internalType": "bool", "name": "longSale", "type": "bool" },
-      { "internalType": "string", "name": "ticker", "type": "string" }
+      {
+        "internalType": "bool",
+        "name": "longSale",
+        "type": "bool"
+      },
+      {
+        "internalType": "string",
+        "name": "ticker",
+        "type": "string"
+      }
     ],
     "name": "initialTGEForSOT",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -568,7 +787,11 @@
         "name": "_registry",
         "type": "address"
       },
-      { "internalType": "address", "name": "_factoryAdmin", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_factoryAdmin",
+        "type": "address"
+      }
     ],
     "name": "initialize",
     "outputs": [],
@@ -578,32 +801,80 @@
   {
     "inputs": [],
     "name": "isAdmin",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "isExistingPools",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-    "name": "isExistingTGEs",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "salt", "type": "bytes32" },
-      { "internalType": "address", "name": "poolOwner", "type": "address" },
-      { "internalType": "bytes", "name": "params", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isExistingPools",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isExistingTGEs",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "salt",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "poolOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "params",
+        "type": "bytes"
+      }
     ],
     "name": "newPoolInstance",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -617,26 +888,62 @@
   {
     "inputs": [],
     "name": "paused",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "poolToJOT",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "poolToSOT",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "pools",
     "outputs": [
       {
@@ -649,14 +956,32 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "potToPool",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "address", "name": "pot", "type": "address" }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "pot",
+        "type": "address"
+      }
+    ],
     "name": "registerPot",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -664,7 +989,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "validator", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      }
     ],
     "name": "registerValidator",
     "outputs": [],
@@ -675,15 +1004,27 @@
     "inputs": [],
     "name": "registry",
     "outputs": [
-      { "internalType": "contract Registry", "name": "", "type": "address" }
+      {
+        "internalType": "contract Registry",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "renounceRole",
     "outputs": [],
@@ -692,8 +1033,16 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "address", "name": "account", "type": "address" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
     ],
     "name": "revokeRole",
     "outputs": [],
@@ -702,7 +1051,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256[]", "name": "ids", "type": "uint256[]" }
+      {
+        "internalType": "uint256[]",
+        "name": "ids",
+        "type": "uint256[]"
+      }
     ],
     "name": "setAllowedUIDTypes",
     "outputs": [],
@@ -711,7 +1064,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_factoryAdmin", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "_factoryAdmin",
+        "type": "address"
+      }
     ],
     "name": "setFactoryAdmin",
     "outputs": [],
@@ -720,8 +1077,16 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
-      { "internalType": "bytes32", "name": "adminRole", "type": "bytes32" }
+      {
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "adminRole",
+        "type": "bytes32"
+      }
     ],
     "name": "setRoleAdmin",
     "outputs": [],
@@ -750,7 +1115,11 @@
         "name": "saleTypeAndDecimal",
         "type": "uint8[]"
       },
-      { "internalType": "bool", "name": "longSale", "type": "bool" },
+      {
+        "internalType": "bool",
+        "name": "longSale",
+        "type": "bool"
+      },
       {
         "components": [
           {
@@ -763,14 +1132,26 @@
             "name": "closingTime",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "rate", "type": "uint256" },
-          { "internalType": "uint256", "name": "cap", "type": "uint256" }
+          {
+            "internalType": "uint256",
+            "name": "rate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cap",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct SecuritizationManager.NewRoundSaleParam",
         "name": "saleParam",
         "type": "tuple"
       },
-      { "internalType": "string", "name": "ticker", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "ticker",
+        "type": "string"
+      }
     ],
     "name": "setUpTGEForJOT",
     "outputs": [],
@@ -794,14 +1175,26 @@
         "name": "saleTypeAndDecimal",
         "type": "uint8[]"
       },
-      { "internalType": "bool", "name": "longSale", "type": "bool" },
+      {
+        "internalType": "bool",
+        "name": "longSale",
+        "type": "bool"
+      },
       {
         "internalType": "uint32",
         "name": "_initialInterest",
         "type": "uint32"
       },
-      { "internalType": "uint32", "name": "_finalInterest", "type": "uint32" },
-      { "internalType": "uint32", "name": "_timeInterval", "type": "uint32" },
+      {
+        "internalType": "uint32",
+        "name": "_finalInterest",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "_timeInterval",
+        "type": "uint32"
+      },
       {
         "internalType": "uint32",
         "name": "_amountChangeEachInterval",
@@ -819,14 +1212,26 @@
             "name": "closingTime",
             "type": "uint256"
           },
-          { "internalType": "uint256", "name": "rate", "type": "uint256" },
-          { "internalType": "uint256", "name": "cap", "type": "uint256" }
+          {
+            "internalType": "uint256",
+            "name": "rate",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "cap",
+            "type": "uint256"
+          }
         ],
         "internalType": "struct SecuritizationManager.NewRoundSaleParam",
         "name": "saleParam",
         "type": "tuple"
       },
-      { "internalType": "string", "name": "ticker", "type": "string" }
+      {
+        "internalType": "string",
+        "name": "ticker",
+        "type": "string"
+      }
     ],
     "name": "setUpTGEForSOT",
     "outputs": [],
@@ -835,10 +1240,20 @@
   },
   {
     "inputs": [
-      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+      {
+        "internalType": "bytes4",
+        "name": "interfaceId",
+        "type": "bytes4"
+      }
     ],
     "name": "supportsInterface",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
@@ -851,7 +1266,11 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "validator", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "validator",
+        "type": "address"
+      }
     ],
     "name": "unregisterValidator",
     "outputs": [],
@@ -860,9 +1279,21 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "_logic", "type": "address" },
-      { "internalType": "address", "name": "admin_", "type": "address" },
-      { "internalType": "bytes", "name": "_data", "type": "bytes" }
+      {
+        "internalType": "address",
+        "name": "_logic",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "admin_",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "_data",
+        "type": "bytes"
+      }
     ],
     "stateMutability": "payable",
     "type": "constructor"
