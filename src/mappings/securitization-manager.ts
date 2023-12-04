@@ -5,14 +5,19 @@ import {
   NoteTokenPurchased as NoteTokenPurchasedEvent} from "../../generated/SecuritizationManager/SecuritizationManager"
 import {
   NoteTokenPurchased,
-  PoolDetail
+  PoolDetail,
+  UserInvestment, 
+  UserPoolInvestment,
 } from "../../generated/schema"
+import { BigInt } from '@graphprotocol/graph-ts';
 
 
 export function handleJotDeployed(event: JotDeployedEvent): void {
   let pool = PoolDetail.load(event.params.poolAddress.toHexString())
   if (!pool) {
     pool = new PoolDetail(event.params.poolAddress.toHexString())
+    pool.totalJOTAmount = new BigInt(0)
+    pool.totalSOTAmount = new BigInt(0)
   }
   pool.jotAddress = event.params.jotAddress.toHexString()
   pool.tgeJOTAddress = event.params.tgeAddress.toHexString()
@@ -23,6 +28,8 @@ export function handleSotDeployed(event: SotDeployedEvent): void {
   let pool = PoolDetail.load(event.params.poolAddress.toHexString())
   if (!pool) {
     pool = new PoolDetail(event.params.poolAddress.toHexString())
+    pool.totalJOTAmount = new BigInt(0)
+    pool.totalSOTAmount = new BigInt(0)
   }
   pool.sotAddress = event.params.sotAddress.toHexString()
   pool.tgeSOTAddress = event.params.tgeAddress.toHexString()
@@ -33,6 +40,8 @@ export function handleNewPoolCreated(event: NewPoolCreatedEvent): void {
   let pool = PoolDetail.load(event.params.instanceAddress.toHexString())
   if (!pool) {
     pool = new PoolDetail(event.params.instanceAddress.toHexString())
+    pool.totalJOTAmount = new BigInt(0)
+    pool.totalSOTAmount = new BigInt(0)
   }  
   pool.createdBlockNumber = event.block.number
   pool.createdTimestamp = event.block.timestamp
@@ -41,19 +50,61 @@ export function handleNewPoolCreated(event: NewPoolCreatedEvent): void {
 }  
 
 export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
+  let poolDetail = PoolDetail.load(event.params.poolAddress.toHexString())
+  if (!poolDetail) {
+    return
+  }
+  let isSOT = poolDetail.tgeSOTAddress === event.params.tgeAddress.toHexString()
+
+  // FIXME: remove this when use clean contract and handle from block create contract
+  if (!poolDetail.totalJOTAmount) {
+    poolDetail.totalJOTAmount = new BigInt(0)
+  }
+  if (!poolDetail.totalSOTAmount) {
+    poolDetail.totalSOTAmount = new BigInt(0)
+  }
+  // ///////////////////////////
+
+  if (isSOT) {
+    poolDetail.totalSOTAmount = poolDetail.totalSOTAmount.plus(event.params.tokenAmount)
+  } else {
+    poolDetail.totalJOTAmount = poolDetail.totalJOTAmount.plus(event.params.tokenAmount)
+  }
+  poolDetail.save()
+
   let tokenPurchased = NoteTokenPurchased.load(event.transaction.hash.concatI32(event.logIndex.toI32()))
   if (!tokenPurchased) {
    tokenPurchased = new NoteTokenPurchased(event.transaction.hash.concatI32(event.logIndex.toI32()))
   }
   tokenPurchased.investor = event.params.investor
   tokenPurchased.tgeAddress = event.params.tgeAddress
-  tokenPurchased.poolAddress = event.params.poolAddress
+  tokenPurchased.pool = event.params.poolAddress.toHexString()
   tokenPurchased.amount = event.params.amount
   tokenPurchased.tokenAmount = event.params.tokenAmount
 
   tokenPurchased.blockNumber = event.block.number
   tokenPurchased.blockTimestamp = event.block.timestamp
   tokenPurchased.transactionHash = event.transaction.hash
-  tokenPurchased.poolDetail = event.params.poolAddress.toHexString()
   tokenPurchased.save()
+
+  let userInvestment = UserInvestment.load(event.params.investor.toHexString())
+  if (!userInvestment) {
+    userInvestment = new UserInvestment(event.params.investor.toHexString())
+    userInvestment.save()
+  }
+
+  let userPoolInvestment = UserPoolInvestment.load(event.params.investor.toHexString().concat(event.params.poolAddress.toHexString()))
+  if (!userPoolInvestment) {
+    userPoolInvestment = new UserPoolInvestment(event.params.investor.toHexString().concat(event.params.poolAddress.toHexString()))
+    userPoolInvestment.totalJOTAmount = new BigInt(0)
+    userPoolInvestment.totalSOTAmount = new BigInt(0)
+  }
+  if (isSOT) {
+    userPoolInvestment.totalSOTAmount = userPoolInvestment.totalSOTAmount.plus(event.params.tokenAmount)
+  } else {
+    userPoolInvestment.totalJOTAmount = userPoolInvestment.totalJOTAmount.plus(event.params.tokenAmount)
+  }
+  userPoolInvestment.userInvestment = event.params.investor.toHexString()
+  userPoolInvestment.poolAddress = event.params.poolAddress.toHexString()
+  userPoolInvestment.save()
 }

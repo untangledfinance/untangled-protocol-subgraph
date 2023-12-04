@@ -1,54 +1,53 @@
-type TokensRedeemed @entity(immutable: true) {
-  id: Bytes!
-  redeemer: Bytes! # address
-  tokenAddress: Bytes! # address
-  currencyAmount: BigInt! # uint256
-  tokenAmount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-  poolDetail: PoolDetail!
-}
+# type TokensRedeemed @entity(immutable: true) {
+#   id: Bytes!
+#   redeemer: Bytes! # address
+#   tokenAddress: Bytes! # address
+#   currencyAmount: BigInt! # uint256
+#   tokenAmount: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+#   poolDetail: PoolDetail!
+# }
 
-type JotDeployed @entity(immutable: true) {
-  id: Bytes!
-  jotAddress: Bytes! # address
-  tgeAddress: Bytes! # address
-  poolAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
+# type JotDeployed @entity(immutable: true) {
+#   id: Bytes!
+#   jotAddress: Bytes! # address
+#   tgeAddress: Bytes! # address
+#   poolAddress: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
 
-type NewPoolCreated @entity(immutable: true) {
-  id: Bytes!
-  instanceAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
+# type NewPoolCreated @entity(immutable: true) {
+#   id: Bytes!
+#   instanceAddress: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
 
-type SotDeployed @entity(immutable: true) {
-  id: Bytes!
-  sotAddress: Bytes! # address
-  tgeAddress: Bytes! # address
-  poolAddress: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
+# type SotDeployed @entity(immutable: true) {
+#   id: Bytes!
+#   sotAddress: Bytes! # address
+#   tgeAddress: Bytes! # address
+#   poolAddress: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
 
 type NoteTokenPurchased @entity(immutable: true) {
   id: Bytes!
   investor: Bytes! # address
   tgeAddress: Bytes! # address
-  poolAddress: Bytes! # address
+  pool: PoolDetail! # address
   amount: BigInt! # uint256
   tokenAmount: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
-  poolDetail: PoolDetail!
 }
 
 type PoolDetail @entity {
@@ -57,9 +56,24 @@ type PoolDetail @entity {
   tgeJOTAddress: String
   sotAddress: String
   tgeSOTAddress: String
-  tokensPurchased: [NoteTokenPurchased!] @derivedFrom(field: "poolDetail")
-  tokensRedeemed: [TokensRedeemed!]
+  tokensPurchased: [NoteTokenPurchased!] @derivedFrom(field: "pool")
+  totalSOTAmount: BigInt!
+  totalJOTAmount: BigInt!
+  # tokensRedeemed: [TokensRedeemed!]
   createdTimestamp: BigInt
   createdBlockNumber: BigInt
   createdTransactionHash: String
+}
+
+type UserPoolInvestment @entity {
+  id: ID!
+  userInvestment: UserInvestment!
+  poolAddress: String!
+  totalSOTAmount: BigInt!
+  totalJOTAmount: BigInt!
+}
+
+type UserInvestment @entity {
+  id: ID!
+  investments: [UserPoolInvestment!]
 }
