@@ -104,7 +104,7 @@ export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
   } else {
     userPoolInvestment.totalJOTAmount = userPoolInvestment.totalJOTAmount.plus(event.params.tokenAmount)
   }
-  userPoolInvestment.userInvestment = event.params.investor.toHexString()
+  userPoolInvestment.investor = event.params.investor.toHexString()
   userPoolInvestment.poolAddress = event.params.poolAddress.toHexString()
   userPoolInvestment.save()
 }

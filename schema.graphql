@@ -67,7 +67,7 @@ type PoolDetail @entity {
 
 type UserPoolInvestment @entity {
   id: ID!
-  userInvestment: UserInvestment!
+  investor: UserInvestment!
   poolAddress: String!
   totalSOTAmount: BigInt!
   totalJOTAmount: BigInt!
@@ -75,5 +75,5 @@ type UserPoolInvestment @entity {
 
 type UserInvestment @entity {
   id: ID!
-  investments: [UserPoolInvestment!]
+  investments: [UserPoolInvestment!] @derivedFrom(field: "investor")
 }
