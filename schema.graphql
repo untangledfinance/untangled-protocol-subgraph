@@ -68,7 +68,7 @@ type PoolDetail @entity {
 type UserPoolInvestment @entity {
   id: ID!
   investor: UserInvestment!
-  poolAddress: String!
+  pool: PoolDetail!
   totalSOTAmount: BigInt!
   totalJOTAmount: BigInt!
 }
