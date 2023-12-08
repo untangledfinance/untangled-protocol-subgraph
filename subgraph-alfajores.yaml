@@ -8,9 +8,9 @@ dataSources:
     name: SecuritizationManager
     network: celo-alfajores
     source:
-      address: '0x3828A20e026d4332CdEb8aDa9C2D21502d71885a'
+      address: '0x8adf1dae06185e59a84c126f3b9b20e1be49e311'
       abi: SecuritizationManager
-      startBlock: 21175482
+      startBlock: 21311061
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
