@@ -149,8 +149,14 @@ For deploying the production subgraph:
 
 ```
 cd subgraph
-yarn graph auth --product hosted-service <deploykey>
-yarn graph codegen
-yarn graph build
-yarn graph deploy --product hosted-service xxxx
+yarn graph auth --studio <deploykey>
+yarn graph codegen ./subgraph-alfajores.yaml
+yarn graph build ./subgraph-alfajores.yaml
+yarn graph deploy --studio <SUBGRAPH_SLUG> ./subgraph-alfajores.yaml
 ```
+
+# Testing
+## For unit tests or snippet code tests:
+- [documentaion](https://thegraph.com/docs/en/developing/unit-testing-framework/)
+- [video tutorial](https://www.youtube.com/watch?v=cB7o2n-QrnU&list=PLTqyKgxaGF3SNakGQwczpSGVjS_xvOv3h)
+- [examples](./tests/)

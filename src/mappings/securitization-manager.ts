@@ -1,3 +1,4 @@
+import { log } from "matchstick-as";
 import {
   JotDeployed as JotDeployedEvent,
   NewPoolCreated as NewPoolCreatedEvent,
@@ -10,6 +11,7 @@ import {
   UserPoolInvestment,
 } from "../../generated/schema"
 import { BigInt } from '@graphprotocol/graph-ts';
+
 
 
 export function handleJotDeployed(event: JotDeployedEvent): void {
@@ -54,8 +56,7 @@ export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
   if (!poolDetail) {
     return
   }
-  let isSOT = poolDetail.tgeSOTAddress === event.params.tgeAddress.toHexString()
-
+  let isSOT = poolDetail.tgeSOTAddress == event.params.tgeAddress.toHexString()
   // FIXME: remove this when use clean contract and handle from block create contract
   if (!poolDetail.totalJOTAmount) {
     poolDetail.totalJOTAmount = new BigInt(0)
