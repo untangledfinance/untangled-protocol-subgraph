@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x8adf1dae06185e59a84c126f3b9b20e1be49e311'
       abi: SecuritizationManager
-      startBlock: 21311061
+      startBlock: 22118203
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -112,3 +112,24 @@ dataSources:
   #       # - event: Unpaused(address)
   #       #   handler: handleUnpaused
   #     file: ./src/mappings/distribution-operator.ts
+  - kind: ethereum
+    name: NoteTokenVault
+    network: celo-alfajores
+    source:
+      address: '0x998F08076B645aD39f0DFec02a35AbFDf00513D2'
+      abi: NoteTokenVault
+      startBlock: 22118203 # TODO config
+
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - RedeemOrder
+      abis:
+        - name: NoteTokenVault
+          file: ./abis/NoteTokenVault.json
+      eventHandlers:
+        - event: RedeemOrder(address,address,address,uint256,uint256)
+          handler: handleRedeemOrder
+      file: ./src/mappings/note-token-vault.ts
