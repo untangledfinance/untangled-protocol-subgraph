@@ -12,5 +12,8 @@ export function handleRedeemOrder(event: RedeemOrderEvent): void {
     order.user = event.params.usr
     order.noteTokenRedeemAmount = event.params.noteTokenRedeemAmount
     order.noteTokenPrice = event.params.noteTokenPrice
+    order.createdTimestamp = event.block.timestamp
+    order.createdBlockNumber = event.block.number
+    order.createdTransactionHash = event.transaction.hash.toHexString()
     order.save()
 }
