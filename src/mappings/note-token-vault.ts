@@ -19,7 +19,7 @@ export function handleRedeemOrder(event: RedeemOrderEvent): void {
     order.save()
 }
 
-export function handleRedeemOrder(event: CancelOrderEvent): void {
+export function handleCancelOrder(event: CancelOrderEvent): void {
     let order = RedeemOrder.load(event.params.pool.toHexString().concat(event.params.noteTokenAddress.toHexString()).concat(event.params.usr.toHexString()))
     if (!order) {
         order = new RedeemOrder(event.params.pool.toHexString().concat(event.params.noteTokenAddress.toHexString()).concat(event.params.usr.toHexString()))
