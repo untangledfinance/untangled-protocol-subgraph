@@ -26,15 +26,15 @@ type PoolDetail @entity {
 }
 
 type RedeemOrder @entity(immutable: true) {
-  id: Bytes!
+  id: ID!
   pool: PoolDetail!
   noteTokenAddress: Bytes!
   user: Bytes!
-  noteTokenRedeemAmount: BigInt!
-  noteTokenPrice: BigInt!
-  createdTimestamp: BigInt!
-  createdBlockNumber: BigInt!
-  createdTransactionHash: String!
+  noteTokenRedeemAmount: BigInt
+  noteTokenPrice: BigInt
+  createdTimestamp: BigInt
+  createdBlockNumber: BigInt
+  createdTransactionHash: String
 }
 
 type UserPoolInvestment @entity {

@@ -132,4 +132,6 @@ dataSources:
       eventHandlers:
         - event: RedeemOrder(address,address,address,uint256,uint256)
           handler: handleRedeemOrder
+        - event: CancelOrder(address,address,address,uint256)
+          handler: handleCancelOrder
       file: ./src/mappings/note-token-vault.ts
