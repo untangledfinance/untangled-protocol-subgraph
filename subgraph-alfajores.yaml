@@ -134,4 +134,6 @@ dataSources:
           handler: handleRedeemOrder
         - event: CancelOrder(address,address,address,uint256)
           handler: handleCancelOrder
+        - event: DisburseOrder(address,address,address[],uint256[],uint256[])
+          handler: handleDisburseOrder
       file: ./src/mappings/note-token-vault.ts

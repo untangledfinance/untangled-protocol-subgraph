@@ -1,4 +1,4 @@
-import {RedeemOrder as RedeemOrderEvent, CancelOrder as CancelOrderEvent} from "../../generated/NoteTokenVault/NoteTokenVault";
+import {RedeemOrder as RedeemOrderEvent, CancelOrder as CancelOrderEvent, DisburseOrder as DisburseOrderEvent} from "../../generated/NoteTokenVault/NoteTokenVault";
 import {RedeemOrder} from "../../generated/schema";
 import {BigInt} from "@graphprotocol/graph-ts";
 
@@ -30,4 +30,18 @@ export function handleCancelOrder(event: CancelOrderEvent): void {
     order.createdBlockNumber = null;
     order.createdTransactionHash = null;
     order.save()
+}
+
+export function handleDisburseOrder(event: DisburseOrderEvent): void {
+    const pool = event.params.pool.toHexString();
+    const noteTokenAddress = event.params.noteTokenAddress.toHexString();
+    for (let i = 0; i < event.params.toAddresses.length; i++) {
+        const user = event.params.toAddresses[i].toHexString();
+        const redeemedAmount = event.params.redeemedAmount[i];
+        let order = RedeemOrder.load(pool.concat(noteTokenAddress).concat(user))
+        if (order && order.noteTokenRedeemAmount) {
+            order.noteTokenRedeemAmount = order.noteTokenRedeemAmount.minus(redeemedAmount);
+            order.save()
+        }
+    }
 }
