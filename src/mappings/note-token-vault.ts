@@ -24,9 +24,6 @@ export function handleCancelOrder(event: CancelOrderEvent): void {
     if (!order) {
         order = new RedeemOrder(event.params.pool.toHexString().concat(event.params.noteTokenAddress.toHexString()).concat(event.params.usr.toHexString()))
     }
-    order.pool = event.params.pool.toHexString()
-    order.noteTokenAddress = event.params.noteTokenAddress
-    order.user = event.params.usr
     order.noteTokenRedeemAmount = null;
     order.noteTokenPrice = null;
     order.createdTimestamp = null;
