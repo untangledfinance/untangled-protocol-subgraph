@@ -25,12 +25,12 @@ type PoolDetail @entity {
   createdTransactionHash: String
 }
 
-type RedeemOrder @entity(immutable: true) {
+type RedeemOrder @entity {
   id: ID!
   pool: PoolDetail!
   noteTokenAddress: Bytes!
   user: Bytes!
-  noteTokenRedeemAmount: BigInt
+  noteTokenRedeemAmount: BigInt!
   noteTokenPrice: BigInt
   createdTimestamp: BigInt
   createdBlockNumber: BigInt
