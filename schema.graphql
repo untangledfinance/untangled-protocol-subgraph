@@ -25,6 +25,18 @@ type PoolDetail @entity {
   createdTransactionHash: String
 }
 
+type RedeemOrder @entity {
+  id: ID!
+  pool: PoolDetail!
+  noteTokenAddress: Bytes!
+  user: Bytes!
+  noteTokenRedeemAmount: BigInt!
+  noteTokenPrice: BigInt
+  createdTimestamp: BigInt
+  createdBlockNumber: BigInt
+  createdTransactionHash: String
+}
+
 type UserPoolInvestment @entity {
   id: ID!
   investor: UserInvestment!
