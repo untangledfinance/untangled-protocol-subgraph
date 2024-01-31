@@ -1,5 +1,5 @@
 import {RedeemOrder as RedeemOrderEvent, CancelOrder as CancelOrderEvent, DisburseOrder as DisburseOrderEvent} from "../../generated/NoteTokenVault/NoteTokenVault";
-import {RedeemOrder} from "../../generated/schema";
+import {PoolDetail, RedeemOrder, UserPoolInvestment} from "../../generated/schema";
 import {BigInt} from "@graphprotocol/graph-ts";
 
 
@@ -35,6 +35,9 @@ export function handleCancelOrder(event: CancelOrderEvent): void {
 export function handleDisburseOrder(event: DisburseOrderEvent): void {
     const pool = event.params.pool.toHexString();
     const noteTokenAddress = event.params.noteTokenAddress.toHexString();
+
+    let poolDetail = PoolDetail.load(pool);
+
     for (let i = 0; i < event.params.toAddresses.length; i++) {
         const user = event.params.toAddresses[i].toHexString();
         const redeemedAmount = event.params.redeemedAmount[i];
@@ -43,5 +46,32 @@ export function handleDisburseOrder(event: DisburseOrderEvent): void {
             order.noteTokenRedeemAmount = order.noteTokenRedeemAmount.minus(redeemedAmount);
             order.save()
         }
+
+        // Update pool totalSOTAmount & totalJOTAmount
+        if (poolDetail) {
+            let isSOT = poolDetail.sotAddress == noteTokenAddress;
+            if (isSOT) {
+                poolDetail.totalSOTAmount = poolDetail.totalSOTAmount.minus(redeemedAmount);
+            } else {
+                poolDetail.totalJOTAmount = poolDetail.totalJOTAmount.minus(redeemedAmount);
+            }
+
+            let userPoolInvestment = UserPoolInvestment.load(user.concat(pool))
+            if (userPoolInvestment) {
+                if (isSOT) {
+                    userPoolInvestment.totalSOTAmount = userPoolInvestment.totalSOTAmount.minus(redeemedAmount);
+                } else {
+                    userPoolInvestment.totalJOTAmount = userPoolInvestment.totalJOTAmount.minus(redeemedAmount);
+                }
+                userPoolInvestment.save();
+            }
+        }
+
     }
+
+    if (poolDetail) {
+        poolDetail.save();
+    }
+
+
 }
