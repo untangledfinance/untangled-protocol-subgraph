@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x8adf1dae06185e59a84c126f3b9b20e1be49e311'
       abi: SecuritizationManager
-      startBlock: 21311061
+      startBlock: 22277651
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -118,7 +118,7 @@ dataSources:
     source:
       address: '0x998F08076B645aD39f0DFec02a35AbFDf00513D2'
       abi: NoteTokenVault
-      startBlock: 21864705
+      startBlock: 22277651
 
     mapping:
       kind: ethereum/events

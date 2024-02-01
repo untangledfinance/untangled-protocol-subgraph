@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x9fEd89D310ca236906e2043C8eB92E4aae71c769'
       abi: SecuritizationManager
-      startBlock: 52220905
+      startBlock: 52992752
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,3 +35,29 @@ dataSources:
         - event: JotDeployed(indexed address,address,address)
           handler: handleJotDeployed
       file: ./src/mappings/securitization-manager.ts
+
+  - kind: ethereum
+    name: NoteTokenVault
+    network: matic
+    source:
+      address: '0xDe4CE95eE32884243247569A136e7B42bc654717'
+      abi: NoteTokenVault
+      startBlock: 52992752
+
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - RedeemOrder
+      abis:
+        - name: NoteTokenVault
+          file: ./abis/NoteTokenVault.json
+      eventHandlers:
+        - event: RedeemOrder(address,address,address,uint256,uint256)
+          handler: handleRedeemOrder
+        - event: CancelOrder(address,address,address,uint256)
+          handler: handleCancelOrder
+        - event: DisburseOrder(address,address,address[],uint256[],uint256[])
+          handler: handleDisburseOrder
+      file: ./src/mappings/note-token-vault.ts
