@@ -8,9 +8,9 @@ dataSources:
     name: SecuritizationManager
     network: celo-alfajores
     source:
-      address: '0x8adf1dae06185e59a84c126f3b9b20e1be49e311'
+      address: '0xe9dc50E02ECe436B33E769386Ebcf916a912a4a5'
       abi: SecuritizationManager
-      startBlock: 22277651
+      startBlock: 22795410
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -20,19 +20,6 @@ dataSources:
         - SotDeployed
         - NewPoolCreated
         - NoteTokenPurchased
-        # - NewNotesTokenCreated
-        # - AdminChanged
-        # - BeaconUpgraded
-        # - Upgraded
-        # - Initialized
-        # - NewTGECreated
-        # - Paused
-        # - RoleAdminChanged
-        # - RoleGranted
-        # - RoleRevoked
-        # - Unpaused
-        # - UpdateAllowedUIDTypes
-        # - UpdatePotToPool
       abis:
         - name: SecuritizationManager
           file: ./abis/SecuritizationManager.json
@@ -47,78 +34,14 @@ dataSources:
           handler: handleSotDeployed
         - event: JotDeployed(indexed address,address,address)
           handler: handleJotDeployed
-        # - event: AdminChanged(address,address)
-        #   handler: handleAdminChanged
-        # - event: BeaconUpgraded(indexed address)
-        #   handler: handleBeaconUpgraded
-        # - event: Upgraded(indexed address)
-        #   handler: handleUpgraded
-        # - event: Initialized(uint8)
-        #   handler: handleInitialized
-        # - event: NewNotesTokenCreated(indexed address)
-        #   handler: handleNewNotesTokenCreated
-        # - event: NewTGECreated(indexed address)
-        #   handler: handleNewTGECreated
-        # - event: Paused(address)
-        #   handler: handlePaused
-        # - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-        #   handler: handleRoleAdminChanged
-        # - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-        #   handler: handleRoleGranted
-        # - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-        #   handler: handleRoleRevoked
-        # - event: Unpaused(address)
-        #   handler: handleUnpaused
-        # - event: UpdateAllowedUIDTypes(uint256[])
-        #   handler: handleUpdateAllowedUIDTypes
-        # - event: UpdatePotToPool(indexed address,indexed address)
-        #   handler: handleUpdatePotToPool
       file: ./src/mappings/securitization-manager.ts
-  # - kind: ethereum
-  #   name: DistributionOperator
-  #   network: alfajores
-  #   source:
-  #     address: '0xe2d6653688646a82dcc0542ea5099988e853a7aa'
-  #     abi: DistributionOperator
-  #     startBlock: 11122056
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.7
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - TokensRedeemed
-  #       # - Initialized
-  #       # - RoleAdminChanged
-  #       # - RoleGranted
-  #       # - RoleRevoked
-  #       # - Paused
-  #       # - Unpaused
-  #     abis:
-  #       - name: DistributionOperator
-  #         file: ./abis/DistributionOperator.json
-  #     eventHandlers:
-  #       - event: TokensRedeemed(indexed address,indexed address,uint256,uint256)
-  #         handler: handleTokensRedeemed
-  #       # - event: Initialized(uint8)
-  #       #   handler: handleInitialized
-  #       # - event: Paused(address)
-  #       #   handler: handlePaused
-  #       # - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
-  #       #   handler: handleRoleAdminChanged
-  #       # - event: RoleGranted(indexed bytes32,indexed address,indexed address)
-  #       #   handler: handleRoleGranted
-  #       # - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
-  #       #   handler: handleRoleRevoked
-  #       # - event: Unpaused(address)
-  #       #   handler: handleUnpaused
-  #     file: ./src/mappings/distribution-operator.ts
   - kind: ethereum
     name: NoteTokenVault
     network: celo-alfajores
     source:
-      address: '0x998F08076B645aD39f0DFec02a35AbFDf00513D2'
+      address: '0x8d8F4d4E95038D47170E0ef3a3197cBec00E171e'
       abi: NoteTokenVault
-      startBlock: 22277651
+      startBlock: 22795410
 
     mapping:
       kind: ethereum/events
