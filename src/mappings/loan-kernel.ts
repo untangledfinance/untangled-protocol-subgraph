@@ -1,34 +1,34 @@
-import {DrawdownAsset as DrawdownAssetEvent, AssetRepay as AssetRepayEvent } from "../../generated/LoanKernel/LoanKernel";
-import {DrawdownAsset, AssetRepay } from "../../generated/schema";
-import {BigInt} from "@graphprotocol/graph-ts";
+import {
+    AssetRepay as AssetRepayEvent,
+    DrawdownAsset as DrawdownAssetEvent
+} from "../../generated/LoanKernel/LoanKernel";
+import {PoolActivity} from "../../generated/schema";
 
 
 export function handleDrawdownAsset(event: DrawdownAssetEvent): void {
-    let drawdown = DrawdownAsset.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
-    if (!drawdown) {
-        drawdown = new DrawdownAsset(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    let poolActivity = PoolActivity.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    if (!poolActivity) {
+        poolActivity = new PoolActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
     }
-    drawdown.pool = event.params._poolAddress.toHexString();
-    drawdown.drawdownAmount = event.params._drawdownAmount;
-    drawdown.createdTimestamp = event.block.timestamp;
-    drawdown.createdBlockNumber = event.block.number;
-    drawdown.createdTransactionHash = event.transaction.hash.toHexString();
-    drawdown.save();
+    poolActivity.pool = event.params._poolAddress.toHexString();
+    poolActivity.transactionType = "DRAWDOWN";
+    poolActivity.amount = event.params._drawdownAmount;
+    poolActivity.createdTimestamp = event.block.timestamp;
+    poolActivity.createdBlockNumber = event.block.number;
+    poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
+    poolActivity.save();
 }
 
 export function handleAssetRepay(event: AssetRepayEvent): void {
-    let assetRepay = AssetRepay.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
-    if (!assetRepay) {
-        assetRepay = new AssetRepay(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    let poolActivity = PoolActivity.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    if (!poolActivity) {
+        poolActivity = new PoolActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
     }
-    assetRepay.pool = event.params._pool.toHexString();
-    assetRepay.payer = event.params._payer.toHexString();
-    assetRepay.amount = event.params._amount;
-    assetRepay.outstandingAmount = event.params._outstandingAmount;
-    assetRepay.token = event.params._token;
-    assetRepay.agreementId = event.params._agreementId;
-    assetRepay.createdTimestamp = event.block.timestamp;
-    assetRepay.createdBlockNumber = event.block.number;
-    assetRepay.createdTransactionHash = event.transaction.hash.toHexString();
-    assetRepay.save();
+    poolActivity.pool = event.params._pool.toHexString();
+    poolActivity.transactionType = "REPAY";
+    poolActivity.amount = event.params._amount;
+    poolActivity.createdTimestamp = event.block.timestamp;
+    poolActivity.createdBlockNumber = event.block.number;
+    poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
+    poolActivity.save();
 }

@@ -5,9 +5,9 @@ import {
   SotDeployed as SotDeployedEvent,
   NoteTokenPurchased as NoteTokenPurchasedEvent} from "../../generated/SecuritizationManager/SecuritizationManager"
 import {
-  NoteTokenPurchased,
+  NoteTokenPurchased, PoolActivity,
   PoolDetail,
-  UserInvestment, 
+  UserInvestment,
   UserPoolInvestment,
 } from "../../generated/schema"
 import { BigInt } from '@graphprotocol/graph-ts';
@@ -44,12 +44,12 @@ export function handleNewPoolCreated(event: NewPoolCreatedEvent): void {
     pool = new PoolDetail(event.params.instanceAddress.toHexString())
     pool.totalJOTAmount = new BigInt(0)
     pool.totalSOTAmount = new BigInt(0)
-  }  
+  }
   pool.createdBlockNumber = event.block.number
   pool.createdTimestamp = event.block.timestamp
   pool.createdTransactionHash = event.transaction.hash.toHexString()
   pool.save()
-}  
+}
 
 export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
   let poolDetail = PoolDetail.load(event.params.poolAddress.toHexString())
@@ -87,6 +87,19 @@ export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
   tokenPurchased.blockTimestamp = event.block.timestamp
   tokenPurchased.transactionHash = event.transaction.hash
   tokenPurchased.save()
+
+  // Create pool activity
+  let poolActivity = PoolActivity.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  if (!poolActivity) {
+    poolActivity = new PoolActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
+  }
+  poolActivity.pool = event.params.poolAddress.toHexString();
+  poolActivity.transactionType = isSOT ? "SOT_PURCHASE" : "JOT_PURCHASE";
+  poolActivity.amount = event.params.amount;
+  poolActivity.createdTimestamp = event.block.timestamp;
+  poolActivity.createdBlockNumber = event.block.number;
+  poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
+  poolActivity.save();
 
   let userInvestment = UserInvestment.load(event.params.investor.toHexString())
   if (!userInvestment) {
