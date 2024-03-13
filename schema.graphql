@@ -37,6 +37,22 @@ type RedeemOrder @entity {
   createdTransactionHash: String
 }
 
+enum TransactionType {
+  DRAWDOWN
+  REPAY
+  SOT_PURCHASE
+  JOT_PURCHASE
+}
+type PoolActivity @entity(immutable: true) {
+  id: Bytes!
+  pool: PoolDetail!
+  amount: BigInt
+  transactionType: TransactionType!
+  createdTimestamp: BigInt!
+  createdBlockNumber: BigInt!
+  createdTransactionHash: String!
+}
+
 type UserPoolInvestment @entity {
   id: ID!
   investor: UserInvestment!
