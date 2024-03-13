@@ -1,4 +1,4 @@
-# The Graph subgraphs related to the UnTangled Protocol (Under Construction, DO NOT USE YET)
+# The Graph subgraphs related to the Untangled Protocol
 
 ## Usage
 
