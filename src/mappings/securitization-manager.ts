@@ -96,6 +96,7 @@ export function handleNoteTokenPurchased(event: NoteTokenPurchasedEvent): void {
   poolActivity.pool = event.params.poolAddress.toHexString();
   poolActivity.transactionType = isSOT ? "SOT_PURCHASE" : "JOT_PURCHASE";
   poolActivity.amount = event.params.amount;
+  poolActivity.from = event.transaction.from.toHexString();
   poolActivity.createdTimestamp = event.block.timestamp;
   poolActivity.createdBlockNumber = event.block.number;
   poolActivity.createdTransactionHash = event.transaction.hash.toHexString();

@@ -46,6 +46,7 @@ enum TransactionType {
 type PoolActivity @entity(immutable: true) {
   id: Bytes!
   pool: PoolDetail!
+  from: String!
   amount: BigInt
   transactionType: TransactionType!
   createdTimestamp: BigInt!
