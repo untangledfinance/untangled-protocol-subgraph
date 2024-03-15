@@ -13,6 +13,7 @@ export function handleDrawdownAsset(event: DrawdownAssetEvent): void {
     poolActivity.pool = event.params._poolAddress.toHexString();
     poolActivity.transactionType = "DRAWDOWN";
     poolActivity.amount = event.params._drawdownAmount;
+    poolActivity.from = event.transaction.from.toHexString();
     poolActivity.createdTimestamp = event.block.timestamp;
     poolActivity.createdBlockNumber = event.block.number;
     poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
@@ -27,6 +28,7 @@ export function handleAssetRepay(event: AssetRepayEvent): void {
     poolActivity.pool = event.params._pool.toHexString();
     poolActivity.transactionType = "REPAY";
     poolActivity.amount = event.params._amount;
+    poolActivity.from = event.transaction.from.toHexString();
     poolActivity.createdTimestamp = event.block.timestamp;
     poolActivity.createdBlockNumber = event.block.number;
     poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
