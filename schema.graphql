@@ -42,6 +42,7 @@ enum TransactionType {
   REPAY
   SOT_PURCHASE
   JOT_PURCHASE
+  EPOCH_WITHDRAW
 }
 type PoolActivity @entity(immutable: true) {
   id: Bytes!
