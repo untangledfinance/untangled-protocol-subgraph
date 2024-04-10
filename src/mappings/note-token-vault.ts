@@ -1,5 +1,5 @@
 import {RedeemOrder as RedeemOrderEvent, CancelOrder as CancelOrderEvent, DisburseOrder as DisburseOrderEvent} from "../../generated/NoteTokenVault/NoteTokenVault";
-import {PoolDetail, RedeemOrder, UserPoolInvestment} from "../../generated/schema";
+import {PoolActivity, PoolDetail, RedeemOrder, UserPoolInvestment} from "../../generated/schema";
 import {BigInt} from "@graphprotocol/graph-ts";
 
 
@@ -38,14 +38,23 @@ export function handleDisburseOrder(event: DisburseOrderEvent): void {
 
     let poolDetail = PoolDetail.load(pool);
 
+    // Load PoolActivity
+    let poolActivity = PoolActivity.load(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    if (!poolActivity) {
+        poolActivity = new PoolActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
+    }
+    let totalCurrencyAmount = BigInt.fromI32(0);
+
     for (let i = 0; i < event.params.toAddresses.length; i++) {
         const user = event.params.toAddresses[i].toHexString();
         const redeemedAmount = event.params.redeemedAmount[i];
+        const currencyAmount = event.params.amounts[i];
         let order = RedeemOrder.load(pool.concat(noteTokenAddress).concat(user))
         if (order && order.noteTokenRedeemAmount) {
             order.noteTokenRedeemAmount = order.noteTokenRedeemAmount.minus(redeemedAmount);
             order.save()
         }
+        totalCurrencyAmount = totalCurrencyAmount.plus(currencyAmount);
 
         // Update pool totalSOTAmount & totalJOTAmount
         if (poolDetail) {
@@ -72,6 +81,16 @@ export function handleDisburseOrder(event: DisburseOrderEvent): void {
     if (poolDetail) {
         poolDetail.save();
     }
+
+    // Save PoolActivity
+    poolActivity.amount = totalCurrencyAmount;
+    poolActivity.pool = pool;
+    poolActivity.transactionType = "EPOCH_WITHDRAW";
+    poolActivity.from = event.transaction.from.toHexString();
+    poolActivity.createdTimestamp = event.block.timestamp;
+    poolActivity.createdBlockNumber = event.block.number;
+    poolActivity.createdTransactionHash = event.transaction.hash.toHexString();
+    poolActivity.save();
 
 
 }
