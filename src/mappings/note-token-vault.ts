@@ -1,7 +1,6 @@
 import {RedeemOrder as RedeemOrderEvent, CancelOrder as CancelOrderEvent, DisburseOrder as DisburseOrderEvent} from "../../generated/NoteTokenVault/NoteTokenVault";
 import {PoolActivity, PoolDetail, RedeemOrder, UserPoolInvestment} from "../../generated/schema";
 import {BigInt} from "@graphprotocol/graph-ts";
-import { log } from '@graphprotocol/graph-ts';
 
 
 export function handleRedeemOrder(event: RedeemOrderEvent): void {
