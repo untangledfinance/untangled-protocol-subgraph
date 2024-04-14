@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0xe9dc50E02ECe436B33E769386Ebcf916a912a4a5'
       abi: SecuritizationManager
-      startBlock: 23466243
+      startBlock: 23521660
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -41,7 +41,7 @@ dataSources:
     source:
       address: '0x8d8F4d4E95038D47170E0ef3a3197cBec00E171e'
       abi: NoteTokenVault
-      startBlock: 23466243
+      startBlock: 23521660
 
     mapping:
       kind: ethereum/events
@@ -49,6 +49,8 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - RedeemOrder
+        - PoolActivity
+        - PoolDetail
       abis:
         - name: NoteTokenVault
           file: ./abis/NoteTokenVault.json
@@ -66,7 +68,7 @@ dataSources:
     source:
       address: '0x7251c87Ff02E928f7339c3e1440cBAbD23D915Ba'
       abi: LoanKernel
-      startBlock: 23466243
+      startBlock: 23521660
 
     mapping:
       kind: ethereum/events
