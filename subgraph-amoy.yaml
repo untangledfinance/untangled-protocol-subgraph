@@ -1,0 +1,88 @@
+specVersion: 0.0.4
+description: Subgraph of Untangled Protocol!
+repository: https://github.com/untangledfinance/untangled-protocol-open
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SecuritizationManager
+    network: polygon-amoy
+    source:
+      address: '0xD66f725910F04D219e68CcD78f0294703c046e69'
+      abi: SecuritizationManager
+      startBlock: 6587153
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - JotDeployed
+        - SotDeployed
+        - NewPoolCreated
+        - NoteTokenPurchased
+      abis:
+        - name: SecuritizationManager
+          file: ./abis/SecuritizationManager.json
+        - name: MintedNormalTGE
+          file: ./abis/MintedNormalTGE.json
+      eventHandlers:
+        - event: NoteTokenPurchased(indexed address,indexed address,address,uint256,uint256)
+          handler: handleNoteTokenPurchased
+        - event: NewPoolCreated(indexed address)
+          handler: handleNewPoolCreated
+        - event: SotDeployed(indexed address,address,address)
+          handler: handleSotDeployed
+        - event: JotDeployed(indexed address,address,address)
+          handler: handleJotDeployed
+      file: ./src/mappings/securitization-manager.ts
+  - kind: ethereum
+    name: NoteTokenVault
+    network: polygon-amoy
+    source:
+      address: '0xCaFcb121A7f9Ea2974F25967Afb3Bb7F55C8bDf8'
+      abi: NoteTokenVault
+      startBlock: 6587153
+
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - RedeemOrder
+        - PoolActivity
+        - PoolDetail
+      abis:
+        - name: NoteTokenVault
+          file: ./abis/NoteTokenVault.json
+      eventHandlers:
+        - event: RedeemOrder(address,address,address,uint256,uint256)
+          handler: handleRedeemOrder
+        - event: CancelOrder(address,address,address,uint256)
+          handler: handleCancelOrder
+        - event: DisburseOrder(address,(address,uint256,uint256),address,address[],uint256[],uint256[])
+          handler: handleDisburseOrder
+      file: ./src/mappings/note-token-vault.ts
+  - kind: ethereum
+    name: LoanKernel
+    network: polygon-amoy
+    source:
+      address: '0x3828A20e026d4332CdEb8aDa9C2D21502d71885a'
+      abi: LoanKernel
+      startBlock: 6587153
+
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DrawdownAsset
+        - AssetRepay
+      abis:
+        - name: LoanKernel
+          file: ./abis/LoanKernel.json
+      eventHandlers:
+        - event: DrawdownAsset(indexed address,uint256)
+          handler: handleDrawdownAsset
+        - event: AssetRepay(indexed bytes32,indexed address,indexed address,uint256,uint256,address)
+          handler: handleAssetRepay
+      file: ./src/mappings/loan-kernel.ts
