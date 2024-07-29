@@ -16,7 +16,7 @@
     "stop-local": "docker compose --env-file .env.local-subgraph down -v && rm -rf data"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.71.1",
+    "@graphprotocol/graph-cli": "^0.79.0",
     "@graphprotocol/graph-ts": "0.35.1"
   },
   "devDependencies": {
