@@ -86,3 +86,25 @@ dataSources:
         - event: AssetRepay(indexed bytes32,indexed address,indexed address,uint256,uint256,address)
           handler: handleAssetRepay
       file: ./src/mappings/loan-kernel.ts
+
+  - kind: ethereum
+    name: Vault
+    network: polygon-amoy
+    source:
+      address: ''
+      abi: LoanKernel
+      startBlock: 10077702
+
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      abis:
+        - name: LoanKernel
+          file: ./abis/LoanKernel.json
+      eventHandlers:
+        - event: DrawdownAsset(indexed address,uint256)
+          handler: handleDrawdownAsset
+        - event: AssetRepay(indexed bytes32,indexed address,indexed address,uint256,uint256,address)
+          handler: handleAssetRepay
+      file: ./src/mappings/loan-kernel.ts
