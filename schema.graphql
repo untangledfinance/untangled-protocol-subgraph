@@ -67,3 +67,19 @@ type UserInvestment @entity {
   id: ID!
   investments: [UserPoolInvestment!] @derivedFrom(field: "investor")
 }
+
+enum VaultTransactionType {
+  MANAGER_INVEST
+  MANAGER_DRAWDOWN
+  VAULT_DEPOSIT
+  VAULT_WITHDRAW
+}
+type VaultActivity @entity(immutable: true) {
+  id: Bytes!
+  from: String!
+  amount: BigInt
+  transactionType: VaultTransactionType!
+  createdTimestamp: BigInt!
+  createdBlockNumber: BigInt!
+  createdTransactionHash: String!
+}
