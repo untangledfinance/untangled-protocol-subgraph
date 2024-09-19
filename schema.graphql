@@ -63,6 +63,12 @@ type UserPoolInvestment @entity {
   totalJOTAmount: BigInt!
 }
 
+type VaultInvestment @entity {
+  id: ID!
+  tokenAddress: String!
+  chainId: BigInt!
+}
+
 type UserInvestment @entity {
   id: ID!
   investments: [UserPoolInvestment!] @derivedFrom(field: "investor")
