@@ -15,6 +15,26 @@
         "internalType": "string",
         "name": "_symbol",
         "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "_safeWalet",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gateway",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gasService",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_go",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -223,6 +243,11 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "NotApprovedByGateway",
+    "type": "error"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -294,25 +319,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "Drawdown",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "address",
         "name": "caller",
         "type": "address"
@@ -337,6 +343,25 @@
       }
     ],
     "name": "OrderPlaced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokenAdded",
     "type": "event"
   },
   {
@@ -400,6 +425,24 @@
     ],
     "name": "Withdraw",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      }
+    ],
+    "name": "addToken",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -578,6 +621,19 @@
   },
   {
     "inputs": [],
+    "name": "currentEpochIdx",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "decimals",
     "outputs": [
       {
@@ -616,12 +672,27 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "commandId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "string",
+        "name": "sourceChain",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "sourceAddress",
+        "type": "string"
+      },
+      {
+        "internalType": "bytes",
+        "name": "payload",
+        "type": "bytes"
       }
     ],
-    "name": "drawdown",
+    "name": "execute",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -653,16 +724,35 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getTotalWithdraw",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
+        "name": "chainId",
         "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "getChainName",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "chainName",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getTokenInfor",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -673,19 +763,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "manager",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -805,19 +882,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -926,11 +990,52 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "newManager",
+        "name": "tokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "transmitter",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      }
+    ],
+    "name": "requestTokenInfor",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "safeWallet",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "setManager",
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "safeAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setRemoteSafeAddress",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -963,7 +1068,33 @@
   },
   {
     "inputs": [],
+    "name": "totalInvestmentValue",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "totalSupply",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalWithdraw",
     "outputs": [
       {
         "internalType": "uint256",
