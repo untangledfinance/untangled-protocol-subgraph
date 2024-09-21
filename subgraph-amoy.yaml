@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x46eCb5830a08e7faF5c08F5AB440321765A22CAc'
       abi: SecuritizationManager
-      startBlock: 12166987
+      startBlock: 12237067
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -41,7 +41,7 @@ dataSources:
     source:
       address: '0xD92f2596Dc5dc1DB63158B706930d38AA36B7933'
       abi: NoteTokenVault
-      startBlock: 12166987
+      startBlock: 12237067
 
     mapping:
       kind: ethereum/events
@@ -68,7 +68,7 @@ dataSources:
     source:
       address: '0x52BF5C01166Fe742729cB87D3d4b76473F26C262'
       abi: LoanKernel
-      startBlock: 12166987
+      startBlock: 12237067
 
     mapping:
       kind: ethereum/events
@@ -91,9 +91,9 @@ dataSources:
     name: Vault
     network: polygon-amoy
     source:
-      address: '0x13D2672c48C4132c21D4B495d3c1098BB7D5DF43'
+      address: '0x91957a7B1Bf69092B6c608D20b1E3566C8d3ecD4'
       abi: Vault
-      startBlock: 12166987
+      startBlock: 12237067
 
     mapping:
       kind: ethereum/events
@@ -121,7 +121,7 @@ dataSources:
     source:
       address: '0x2f9c74C4aB5676c6a2965B4a0FD520e3342A6362'
       abi: Manager
-      startBlock: 12166987
+      startBlock: 12237067
 
     mapping:
       kind: ethereum/events
