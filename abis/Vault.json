@@ -434,6 +434,11 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      },
+      {
         "internalType": "uint256",
         "name": "chainId",
         "type": "uint256"
@@ -756,19 +761,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "getTokenInfor",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "getVaultBalance",
     "outputs": [
@@ -789,7 +781,7 @@
         "type": "address"
       }
     ],
-    "name": "isTransmitter",
+    "name": "isCrosschainOracle",
     "outputs": [
       {
         "internalType": "bool",
@@ -1043,16 +1035,6 @@
         "internalType": "address",
         "name": "tokenAddress",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "transmitter",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
       }
     ],
     "name": "requestTokenInfor",
@@ -1116,16 +1098,6 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "decimal",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "balance",
         "type": "uint256"
       },
@@ -1133,6 +1105,21 @@
         "internalType": "uint256",
         "name": "price",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "chainId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "decimal",
+        "type": "uint8"
+      },
+      {
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
