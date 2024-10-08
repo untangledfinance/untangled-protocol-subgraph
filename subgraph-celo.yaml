@@ -10,7 +10,7 @@ dataSources:
     source:
       address: '0x4DCC7a839CE7e952Cd90d03d65C70B9CCD6BA4C2'
       abi: SecuritizationManager
-      startBlock: 25169777
+      startBlock: 27939712
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -41,7 +41,7 @@ dataSources:
     source:
       address: '0x8D933c50852f0739199dcc193Fc5Ad8aC54C3296'
       abi: NoteTokenVault
-      startBlock: 25169777
+      startBlock: 27939712
 
     mapping:
       kind: ethereum/events
@@ -68,7 +68,7 @@ dataSources:
     source:
       address: '0xAE002059C987Dd2da78ad4D0435B9B9DfB6b6F43'
       abi: LoanKernel
-      startBlock: 25169777
+      startBlock: 27939712
 
     mapping:
       kind: ethereum/events

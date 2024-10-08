@@ -25,7 +25,10 @@ export function handleCancelOrder(event: CancelOrderEvent): void {
         order = new RedeemOrder(event.params.pool.toHexString().concat(event.params.noteTokenAddress.toHexString()).concat(event.params.usr.toHexString()))
     }
     order.noteTokenRedeemAmount = BigInt.fromI32(0);
+    order.pool = event.params.pool.toHexString()
+    order.noteTokenAddress = event.params.noteTokenAddress
     order.noteTokenPrice = null;
+    order.user = event.params.usr
     order.createdTimestamp = null;
     order.createdBlockNumber = null;
     order.createdTransactionHash = null;
