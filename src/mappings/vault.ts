@@ -1,6 +1,5 @@
-import {Deposit, Withdraw, TokenAdded} from "../../generated/Vault/Vault";
-import {UserPoolInvestment, VaultActivity, VaultInvestment} from "../../generated/schema";
-import {BigInt} from "@graphprotocol/graph-ts";
+import {VaultActivity, VaultInvestment} from "../../generated/schema";
+import {Deposit, TokenAdded, Withdraw} from "../../generated/templates/Vault/Vault";
 
 
 export function handleDeposit(event: Deposit): void {
