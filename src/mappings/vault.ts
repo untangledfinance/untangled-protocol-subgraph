@@ -8,6 +8,7 @@ export function handleDeposit(event: Deposit): void {
         vaultActivity = new VaultActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
     }
     vaultActivity.transactionType = "VAULT_DEPOSIT";
+    vaultActivity.vaultAddress = event.address.toHexString();
     vaultActivity.amount = event.params.assets;
     vaultActivity.from = event.transaction.from.toHexString();
     vaultActivity.createdTimestamp = event.block.timestamp;
@@ -22,6 +23,7 @@ export function handleWithdraw(event: Withdraw): void {
         vaultActivity = new VaultActivity(event.transaction.hash.concatI32(event.logIndex.toI32()));
     }
     vaultActivity.transactionType = "VAULT_WITHDRAW";
+    vaultActivity.vaultAddress = event.address.toHexString();
     vaultActivity.amount = event.params.assets;
     vaultActivity.from = event.transaction.from.toHexString();
     vaultActivity.createdTimestamp = event.block.timestamp;
@@ -36,6 +38,7 @@ export function handleTokenAdded(event: TokenAdded): void {
         vaultInvestment = new VaultInvestment(event.params.chainId.toHexString().concat(event.params.tokenAddress.toHexString()));
     }
     vaultInvestment.tokenAddress = event.params.tokenAddress.toHexString();
+    vaultInvestment.vaultAddress = event.address.toHexString();
     vaultInvestment.chainId = event.params.chainId;
     vaultInvestment.save();
 }
