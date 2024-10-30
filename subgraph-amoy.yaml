@@ -88,12 +88,34 @@ dataSources:
       file: ./src/mappings/loan-kernel.ts
 
   - kind: ethereum
+    name: VaultFactory
+    network: polygon-amoy
+    source:
+      address: '0x3Ce6b8D8FD287805108D39A699f4979eAdd360fb'
+      abi: VaultFactory
+      startBlock: 13265787
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault-factory.ts
+      entities:
+        - VaultActivity
+        - VaultInvestment
+      abis:
+        - name: VaultFactory
+          file: ./abis/VaultFactory.json
+        - name: Vault
+          file: ./abis/Vault.json
+      eventHandlers:
+        - event: NewVaultCreated(address,address,address,bool)
+          handler: handleNewVaultCreated
+
+  - kind: ethereum
     name: Vault
     network: polygon-amoy
     source:
-      address: '0x66adFDc8CfCEa9Db7D5c76E1467F41394f95E88D'
       abi: Vault
-      startBlock: 12991388
 
     mapping:
       kind: ethereum/events
