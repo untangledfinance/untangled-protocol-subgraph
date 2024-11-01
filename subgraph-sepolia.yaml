@@ -91,9 +91,9 @@ dataSources:
     name: VaultFactory
     network: sepolia
     source:
-      address: '0x48f4b0FC601A61e49f2dACe49bbe032E5E79aAFF'
+      address: '0x93135D2f3EEA9593188c603fC50f941d6c561ee9'
       abi: VaultFactory
-      startBlock: 6941716
+      startBlock: 6987584
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
