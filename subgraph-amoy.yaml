@@ -91,9 +91,9 @@ dataSources:
     name: VaultFactory
     network: polygon-amoy
     source:
-      address: '0xad72bD1c3eAB1bf231240971888b3C204767f96C'
+      address: '0x51086A229eAba66C434056E3752Ca9D4B41FC94c'
       abi: VaultFactory
-      startBlock: 13874577
+      startBlock: 13963869
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
