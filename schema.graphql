@@ -25,6 +25,24 @@ type PoolDetail @entity {
   createdTransactionHash: String
 }
 
+type VaultDetail @entity {
+  id: ID!
+  assetAddress: String
+  safeAddress: String
+  kycRequired: String
+  createdTimestamp: BigInt
+  createdBlockNumber: BigInt
+  createdTransactionHash: String
+}
+
+type UserVaultInvestment @entity {
+  id: ID!
+  investor: UserInvestment!
+  pool: PoolDetail!
+  totalSOTAmount: BigInt!
+  totalJOTAmount: BigInt!
+}
+
 type RedeemOrder @entity {
   id: ID!
   pool: PoolDetail!
