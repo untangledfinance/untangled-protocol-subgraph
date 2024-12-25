@@ -1,39 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_gateway",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_gasService",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_go",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "issuer",
-        "type": "address"
-      }
-    ],
-    "name": "NewIssuer",
-    "type": "event"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -53,12 +19,6 @@
         "internalType": "address",
         "name": "safeAddress",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "bool",
-        "name": "kycRequired",
-        "type": "bool"
       }
     ],
     "name": "NewVaultCreated",
@@ -85,27 +45,9 @@
         "internalType": "address",
         "name": "safeAddress",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "kycRequired",
-        "type": "bool"
       }
     ],
     "name": "createVault",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newIssuer",
-        "type": "address"
-      }
-    ],
-    "name": "grantIssuerRole",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

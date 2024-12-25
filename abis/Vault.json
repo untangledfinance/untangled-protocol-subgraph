@@ -20,21 +20,6 @@
         "internalType": "address",
         "name": "_safeWalet",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_gateway",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_gasService",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_go",
-        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -238,13 +223,60 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidBeneficiary",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "moduleType",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvalidModuleType",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LengthMissmatch",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "MathOverflowedMulDiv",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "NotApprovedByGateway",
+    "name": "OnlyCrosschainModule",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyFeeModule",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyWithdrawModule",
     "type": "error"
   },
   {
@@ -256,6 +288,28 @@
       }
     ],
     "name": "SafeERC20FailedOperation",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "Unauthorized",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "withdrawModule",
+        "type": "address"
+      }
+    ],
+    "name": "WithdrawModuleInitialized",
     "type": "error"
   },
   {
@@ -319,30 +373,43 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "caller",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "owner",
+        "name": "beneficiary",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "asset",
+        "name": "timestamp",
         "type": "uint256"
       }
     ],
-    "name": "OrderPlaced",
+    "name": "FeeClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "ForceBurn",
     "type": "event"
   },
   {
@@ -351,17 +418,48 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "tokenAddress",
+        "name": "receiver",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "chainId",
+        "name": "shares",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
         "type": "uint256"
       }
     ],
-    "name": "TokenAdded",
+    "name": "ForceMint",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "moduleAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "moduleType",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "timestamp",
+        "type": "uint256"
+      }
+    ],
+    "name": "ModuleUpdated",
     "type": "event"
   },
   {
@@ -425,29 +523,6 @@
     ],
     "name": "Withdraw",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "oracle",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      }
-    ],
-    "name": "addToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -532,58 +607,32 @@
   {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      }
-    ],
-    "name": "cancelWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      }
-    ],
-    "name": "claimWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "receiver",
-        "type": "address"
-      }
-    ],
-    "name": "claimableRequest",
-    "outputs": [
-      {
         "internalType": "uint256",
-        "name": "",
+        "name": "amount",
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "beneficiary",
+        "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "claimFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "closeEpoch",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "claimableKeeper",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -619,19 +668,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "currentEpochIdx",
-    "outputs": [
-      {
-        "internalType": "uint32",
-        "name": "",
-        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -676,88 +712,86 @@
   },
   {
     "inputs": [],
-    "name": "epochClosed",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
+    "name": "enableAsyncWithdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
       {
-        "internalType": "bytes32",
-        "name": "commandId",
-        "type": "bytes32"
-      },
-      {
-        "internalType": "string",
-        "name": "sourceChain",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "sourceAddress",
-        "type": "string"
-      },
-      {
-        "internalType": "bytes",
-        "name": "payload",
-        "type": "bytes"
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
       }
     ],
-    "name": "execute",
+    "name": "forceBurn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "shares",
+        "type": "uint256"
+      }
+    ],
+    "name": "forceMint",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "fulfillWithdrawRequest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "fulfillment",
+    "name": "getModules",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getChainName",
+    "inputs": [],
+    "name": "getTreasury",
     "outputs": [
       {
-        "internalType": "string",
-        "name": "chainName",
-        "type": "string"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "stateMutability": "pure",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -768,25 +802,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "isCrosschainOracle",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -853,7 +868,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "owner",
         "type": "address"
       }
     ],
@@ -1014,61 +1029,57 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "remoteSafeAddress",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "tokenAddress",
-        "type": "address"
-      }
-    ],
-    "name": "requestTokenInfor",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "safeWallet",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "chainId",
+        "name": "shares",
         "type": "uint256"
       },
       {
         "internalType": "address",
-        "name": "safeAddress",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "owner",
         "type": "address"
       }
     ],
-    "name": "setRemoteSafeAddress",
+    "name": "requestRedeem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newModuleAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "moduleType",
+        "type": "uint256"
+      }
+    ],
+    "name": "setModule",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "moduleAddresses",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "moduleTypes",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setModules",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1081,45 +1092,6 @@
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "tokenInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "balance",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "price",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "chainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "decimal",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "oracle",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1140,33 +1112,7 @@
   },
   {
     "inputs": [],
-    "name": "totalInvestmentValue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "totalSupply",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalWithdraw",
     "outputs": [
       {
         "internalType": "uint256",
@@ -1260,33 +1206,12 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "withdrawModule",
+    "outputs": [
       {
         "internalType": "address",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "withdrawRequests",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "assets",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint32",
-        "name": "epochIdx",
-        "type": "uint32"
-      },
-      {
-        "internalType": "address",
-        "name": "owner",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "sender",
         "type": "address"
       }
     ],

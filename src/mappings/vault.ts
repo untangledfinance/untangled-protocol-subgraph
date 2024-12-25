@@ -1,5 +1,5 @@
-import {VaultActivity, VaultInvestment} from "../../generated/schema";
-import {Deposit, TokenAdded, Withdraw} from "../../generated/templates/Vault/Vault";
+import {VaultActivity} from "../../generated/schema";
+import {Deposit, Withdraw} from "../../generated/templates/Vault/Vault";
 
 
 export function handleDeposit(event: Deposit): void {
@@ -32,13 +32,13 @@ export function handleWithdraw(event: Withdraw): void {
     vaultActivity.save();
 }
 
-export function handleTokenAdded(event: TokenAdded): void {
-    let vaultInvestment = VaultInvestment.load(event.params.chainId.toHexString().concat(event.params.tokenAddress.toHexString()));
-    if (!vaultInvestment) {
-        vaultInvestment = new VaultInvestment(event.params.chainId.toHexString().concat(event.params.tokenAddress.toHexString()));
-    }
-    vaultInvestment.tokenAddress = event.params.tokenAddress.toHexString();
-    vaultInvestment.vaultAddress = event.address.toHexString();
-    vaultInvestment.chainId = event.params.chainId;
-    vaultInvestment.save();
-}
+// export function handleTokenAdded(event: TokenAdded): void {
+//     let vaultInvestment = VaultInvestment.load(event.params.chainId.toHexString().concat(event.params.tokenAddress.toHexString()));
+//     if (!vaultInvestment) {
+//         vaultInvestment = new VaultInvestment(event.params.chainId.toHexString().concat(event.params.tokenAddress.toHexString()));
+//     }
+//     vaultInvestment.tokenAddress = event.params.tokenAddress.toHexString();
+//     vaultInvestment.vaultAddress = event.address.toHexString();
+//     vaultInvestment.chainId = event.params.chainId;
+//     vaultInvestment.save();
+// }
