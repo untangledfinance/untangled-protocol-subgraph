@@ -36,28 +36,81 @@ dataSources:
           handler: handleJotDeployed
       file: ./src/mappings/securitization-manager.ts
 
+#  - kind: ethereum
+#    name: NoteTokenVault
+#    network: matic
+#    source:
+#      address: '0xDe4CE95eE32884243247569A136e7B42bc654717'
+#      abi: NoteTokenVault
+#      startBlock: 52992752
+#
+#    mapping:
+#      kind: ethereum/events
+#      apiVersion: 0.0.7
+#      language: wasm/assemblyscript
+#      entities:
+#        - RedeemOrder
+#      abis:
+#        - name: NoteTokenVault
+#          file: ./abis/NoteTokenVault.json
+#      eventHandlers:
+#        - event: RedeemOrder(address,address,address,uint256,uint256)
+#          handler: handleRedeemOrder
+#        - event: CancelOrder(address,address,address,uint256)
+#          handler: handleCancelOrder
+#        - event: DisburseOrder(address,address,address[],uint256[],uint256[])
+#          handler: handleDisburseOrder
+#      file: ./src/mappings/note-token-vault.ts
+
   - kind: ethereum
-    name: NoteTokenVault
+    name: VaultFactory
     network: matic
     source:
-      address: '0xDe4CE95eE32884243247569A136e7B42bc654717'
-      abi: NoteTokenVault
-      startBlock: 52992752
+      address: '0x2562883f006d04cCc2907635E38089fBFc6BE45b'
+      abi: VaultFactory
+      startBlock: 65861989
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/vault-factory.ts
+      entities:
+        - VaultActivity
+        - VaultInvestment
+      abis:
+        - name: VaultFactory
+          file: ./abis/VaultFactory.json
+        - name: Vault
+          file: ./abis/Vault.json
+      eventHandlers:
+        - event: NewVaultCreated(address,address,address)
+          handler: handleNewVaultCreated
+
+templates:
+  - kind: ethereum
+    name: Vault
+    network: matic
+    source:
+      abi: Vault
 
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - RedeemOrder
+        - Deposit
+        - Withdraw
+        - TokenAdded
       abis:
-        - name: NoteTokenVault
-          file: ./abis/NoteTokenVault.json
+        - name: Vault
+          file: ./abis/Vault.json
       eventHandlers:
-        - event: RedeemOrder(address,address,address,uint256,uint256)
-          handler: handleRedeemOrder
-        - event: CancelOrder(address,address,address,uint256)
-          handler: handleCancelOrder
-        - event: DisburseOrder(address,address,address[],uint256[],uint256[])
-          handler: handleDisburseOrder
-      file: ./src/mappings/note-token-vault.ts
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
+      #        - event: TokenAdded(address,uint256)
+      #          handler: handleTokenAdded
+      file: ./src/mappings/vault.ts
+
+
