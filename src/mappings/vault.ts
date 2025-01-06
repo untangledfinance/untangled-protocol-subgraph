@@ -1,5 +1,6 @@
-import {VaultActivity} from "../../generated/schema";
-import {Deposit, Withdraw} from "../../generated/templates/Vault/Vault";
+import {UserVaultBalance, VaultActivity} from "../../generated/schema";
+import {Deposit, Withdraw, Transfer} from "../../generated/templates/Vault/Vault";
+import {BigInt} from "@graphprotocol/graph-ts";
 
 
 export function handleDeposit(event: Deposit): void {
@@ -30,6 +31,29 @@ export function handleWithdraw(event: Withdraw): void {
     vaultActivity.createdBlockNumber = event.block.number;
     vaultActivity.createdTransactionHash = event.transaction.hash.toHexString();
     vaultActivity.save();
+}
+
+export function handleTransfer(event: Transfer): void {
+    let fromBalance = UserVaultBalance.load(event.params.from.toHexString().concat(event.address.toHexString()));
+    if (!fromBalance) {
+        fromBalance = new UserVaultBalance(event.params.from.toHexString().concat(event.address.toHexString()));
+        fromBalance.balance = new BigInt(0);
+    }
+    let toBalance = UserVaultBalance.load(event.params.to.toHexString().concat(event.address.toHexString()));
+    if (!toBalance) {
+        toBalance = new UserVaultBalance(event.params.to.toHexString().concat(event.address.toHexString()));
+        toBalance.balance = new BigInt(0);
+    }
+    fromBalance.vaultAddress = event.address.toHexString();
+    fromBalance.balance = fromBalance.balance.minus(event.params.value);
+    fromBalance.investor = event.params.from.toHexString();
+
+    toBalance.vaultAddress = event.address.toHexString();
+    toBalance.balance = toBalance.balance.plus(event.params.value);
+    toBalance.investor = event.params.to.toHexString();
+
+    fromBalance.save();
+    toBalance.save();
 }
 
 // export function handleTokenAdded(event: TokenAdded): void {

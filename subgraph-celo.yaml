@@ -134,6 +134,8 @@ templates:
           handler: handleDeposit
         - event: Withdraw(indexed address,indexed address,indexed address,uint256,uint256)
           handler: handleWithdraw
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
 #        - event: TokenAdded(address,uint256)
 #          handler: handleTokenAdded
       file: ./src/mappings/vault.ts
