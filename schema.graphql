@@ -63,6 +63,13 @@ type UserPoolInvestment @entity {
   totalJOTAmount: BigInt!
 }
 
+type UserVaultBalance @entity {
+  id: ID!
+  investor: String!
+  vaultAddress: String!
+  balance: BigInt!
+}
+
 type VaultInvestment @entity {
   id: ID!
   vaultAddress: String!
